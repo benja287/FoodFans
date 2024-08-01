@@ -1,6 +1,16 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # Configuración del host para los correos electrónicos
+   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+   # Asegúrate de que se pueda enviar correos electrónicos en desarrollo (opcional)
+   config.action_mailer.delivery_method = :smtp
+   config.action_mailer.smtp_settings = {
+     address: 'localhost',
+     port: 1025
+   }
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time

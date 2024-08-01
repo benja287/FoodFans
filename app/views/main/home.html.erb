@@ -12,24 +12,26 @@
 
   <div class="header">
     <div class="header-content">
-      <div class="info">
-        <h1>Bienvenido a TuApp</h1>
-        <p>Esta es la página principal de tu aplicación Rails.</p>
-      </div>
-      <div class="auth-links">
-        <% if user_signed_in? %>
-          <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "btn bg-success p-2 text-white bg-opacity-50" do %>
-            <div class="p-3" style="background-color: #FFA500; color: white; border: 1px solid #28a745; padding: 2px; margin-bottom: 2px;">
-              <p>Cerrar Sesión</p>
-            </div>
+      <div class="info-auth-container">
+        <div class="info">
+          <h1>Bienvenido a TuApp</h1>
+          <p>Esta es la página principal de tu aplicación Rails.</p>
+        </div>
+        <div class="auth-links">
+          <% if user_signed_in? %>
+            <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "auth-link btn" do %>
+              <div class="auth-button">
+                <p>Cerrar Sesión</p>
+              </div>
+            <% end %>
+          <% else %>
+            <%= link_to new_user_session_path, class: "auth-link btn" do %>
+              <div class="auth-button">
+                <p>Iniciar Sesión</p>
+              </div>
+            <% end %>
           <% end %>
-        <% else %>
-          <%= link_to new_user_session_path, class: "btn bg-success p-2 text-white bg-opacity-50" do %>
-            <div class="p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end">
-              <p>Iniciar Sesión</p>
-            </div>
-          <% end %>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>

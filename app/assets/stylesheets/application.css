@@ -31,22 +31,7 @@
    margin: 0;
  }
 
- /* Contenedor para el contenido */
- .content {
-   /* Usar flexbox para alinear el contenido en la parte superior */
-   display: flex;
-   flex-direction: column;
-   justify-content: flex-start; /* Alinear el contenido en la parte superior */
-   align-items: center; /* Centrar horizontalmente */
-   height: 100vh; /* Altura completa de la ventana */
-   padding: 20px;
-   position: relative; /* Necesario para que el contenido se sitúe encima de la imagen de fondo */
-   z-index: 1; /* Asegúrate de que el contenido esté encima de la imagen de fondo */
- }
 
- h1, p {
-   text-align: center; /* Centrar el texto */
- }
 
  /* Estilos para el formulario de inicio de sesión */
  .login-form-container {
@@ -83,38 +68,69 @@
  input[type="submit"]:hover {
    background-color: #0056b3;
  }
- /* Estilos para el contenedor del header */
-.header {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Alinear el contenido en la parte superior */
-  width: 100%;
-  padding: 20px;
-  z-index: 1; /* Asegúrate de que el contenido esté encima de la imagen de fondo */
-}
+ /* Estilos para el encabezado */
+ .header {
+   display: flex;
+   justify-content: center;
+   align-items: flex-start;
+   height: 100vh;
+   padding: 20px;
+   background-color: rgba(51, 51, 51, 0.8);
+   color: #fff;
+ }
 
-/* Estilos para el contenido dentro del header */
-.header-content {
-  display: flex;
-  justify-content: flex-start; /* Alinear el contenido y el enlace cerca del inicio */
-  align-items: center; /* Centrar verticalmente los elementos */
-  gap: 15px; /* Ajustar el espacio entre el contenido y el enlace */
-}
+ .header-content {
+   width: 100%;
+   max-width: 1200px;
+ }
 
-/* Estilos para el bloque de información */
-.info {
-  flex: 1; /* Ocupar el espacio disponible */
-}
+ .info-auth-container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: rgba(51, 51, 51, 0.9);
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+ }
 
-/* Estilos para los enlaces de autenticación */
-.auth-links {
-  display: flex;
-  align-items: center; /* Centrar verticalmente los enlaces */
-}
+ .info {
+   flex: 1;
+   margin-right: 20px;
+ }
 
-/* Opcional: Añadir un margen entre el texto y los enlaces de autenticación */
-.info h1, .info p {
-  margin: 0;
-  text-align: left;
-}
+ .info h1 {
+   margin: 0;
+   font-size: 2em;
+   color: #ffa500;
+ }
+
+ .info p {
+   font-size: 1.2em;
+ }
+
+ /* Estilos para los enlaces de autenticación */
+ .auth-links {
+   display: flex;
+   align-items: center;
+ }
+
+ .auth-link {
+   text-decoration: none;
+   color: #fff;
+ }
+
+ .auth-button {
+   background-color: #ffa500;
+   color: white;
+   border: 1px solid #28a745;
+   padding: 10px;
+   margin-bottom: 10px;
+   display: inline-block;
+   transition: background-color 0.3s ease;
+   border-radius: 4px;
+ }
+
+ .auth-button:hover {
+   background-color: #444;
+ }
