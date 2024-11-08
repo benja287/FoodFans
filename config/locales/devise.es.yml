@@ -1,0 +1,12 @@
+es:
+  devise:
+    sessions:
+      signed_in: "Has iniciado sesión correctamente."
+      signed_out: "Has cerrado sesión correctamente."
+    passwords:
+      send_instructions: "Recibirás un email con instrucciones para cambiar tu contraseña."
+    failure:
+      invalid: "Email o contraseña incorrectos."
+  errors:
+    messages:
+      too_short: "La contraseña es demasiado corta (mínimo son %{count} caracteres)"

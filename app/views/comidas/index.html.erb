@@ -1,0 +1,8 @@
+<h1>Comidas en <%= @lugar.nombre %></h1>
+<% @comidas.each do |comida| %>
+  <div>
+    <h2><%= link_to comida.nombre, lugare_comida_path(@lugar, comida) %></h2>
+    <p>Precio: <%= number_to_currency(comida.precio) %></p>
+    <p>Tipo de Comida: <%= comida.tipo_comida %></p>
+  </div>
+<% end %>

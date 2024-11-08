@@ -1,0 +1,18 @@
+<h1><%= @lugar.nombre %></h1>
+<p>Dirección: <%= @lugar.direccion %></p>
+<p>Tipo: <%= @lugar.tipo %></p>
+<p>Puntaje: <%= @lugar.puntaje %></p>
+<p>Descripción: <%= @lugar.descripcion %></p>
+
+<h2>Comidas</h2>
+<% @lugar.comidas.each do |comida| %>
+  <h3><%= comida.nombre %></h3>
+  <% if comida.foto.attached? %>
+    <%= image_tag comida.foto.variant(resize_to_limit: [300, 300]) %>
+  <% end %>
+
+  <p>Sabor: <%= comida.sabor %></p>
+  <p>Precio: <%= number_to_currency(comida.precio) %></p>
+<% end %>
+
+<%= link_to "Agregar Comida", new_lugare_comida_path(lugare_id: @lugar.id) %>

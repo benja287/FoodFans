@@ -1,0 +1,32 @@
+<h1>Lugares Registrados</h1>
+
+<%= link_to 'Registrar un nuevo lugar', new_lugare_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Tipo</th>
+      <th>Puntaje</th>
+      <th>Descripción</th>
+      <th>Fecha de Registro</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lugares.each do |lugar| %>
+      <tr>
+        <td><%= lugar.nombre %></td>
+        <td><%= lugar.direccion %></td>
+        <td><%= lugar.tipo %></td>
+        <td><%= lugar.puntaje %></td>
+        <td><%= lugar.descripcion %></td>
+        <td><%= lugar.fecha_de_registro %></td>
+        <td>
+          <%= link_to 'Ver', lugare_path(lugar), class: 'btn btn-info' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

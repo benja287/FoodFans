@@ -1,0 +1,19 @@
+<h1>Registrar Comida en <%= @lugar.nombre %></h1>
+<%= form_with model: [@lugar, @comida], url: lugare_comidas_path(@lugar), local: true, multipart: true do |form| %>
+  <%= form.label :nombre %>
+  <%= form.text_field :nombre %><br>
+
+  <%= form.label :foto %>
+  <%= form.file_field :foto %><br>
+
+  <%= form.label :precio %>
+  <%= form.number_field :precio %><br>
+
+  <%= form.label :tipo_comida %><br>
+  <%= form.check_box :tipo_comida, { multiple: true }, "Carne", nil %> Carne<br>
+  <%= form.check_box :tipo_comida, { multiple: true }, "Pastas", nil %> Pastas<br>
+  <%= form.check_box :tipo_comida, { multiple: true }, "Pescados y Mariscos", nil %> Pescados y Mariscos<br>
+  <%= form.check_box :tipo_comida, { multiple: true }, "Harinas", nil %> Harinas<br>
+
+  <%= form.submit "Registrar Comida" %>
+<% end %>
