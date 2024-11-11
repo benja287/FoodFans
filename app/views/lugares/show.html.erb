@@ -32,9 +32,8 @@
         <td>
           <%= link_to 'Ver', lugare_comida_path(@lugar, comida), class: 'btn btn-info' %>
           <%= link_to 'Editar', edit_lugare_comida_path(@lugar, comida), class: 'btn btn-warning' %>
-          <%= link_to 'Deja una Reseña del Lugar', new_lugare_review_path(@lugar), class: 'btn btn-primary' %>
-          <!-- Enlace para crear una reseña de la comida -->
-          <%= link_to 'Deja una Reseña de la Comida', new_lugare_comida_review_path(@lugar, comida), class: 'btn btn-primary' %>
+          <%= link_to 'Agregar Opinión', new_lugare_opinion_path(@lugar), class: 'btn btn-primary' %>
+
 
         </td>
       </tr>

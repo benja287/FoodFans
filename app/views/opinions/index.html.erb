@@ -1,0 +1,24 @@
+# app/views/opinions/index.html.erb
+<div class="container mt-4">
+  <h1>Opiniones</h1>
+
+  <div class="row">
+    <% @opinions.each do |opinion| %>
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= opinion.lugar ? opinion.lugar.nombre : opinion.comida.nombre %>
+            </h5>
+            <p class="card-text">
+              <strong>Fecha:</strong> <%= opinion.fecha %><br>
+              <strong>Puntaje:</strong> <%= "⭐" * opinion.puntaje %><br>
+              <strong>Comentario:</strong> <%= opinion.comentario %>
+            </p>
+            <small class="text-muted">Por: <%= opinion.user.email %></small>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
