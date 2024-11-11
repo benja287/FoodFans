@@ -1,0 +1,17 @@
+<h1><%= @comida.nombre %></h1>
+<p>Sabor: <%= @comida.sabor %></p>
+<p>Precio: <%= number_to_currency(@comida.precio) %></p>
+<p>Fecha de Registro: <%= @comida.fecha_de_registro %></p>
+
+
+<% if @comida.photo.attached? %>
+  <p>Foto:</p>
+  <%= image_tag @comida.photo, size: "200x200" %>
+<% else %>
+  <p>Sin foto</p>
+<% end %>
+
+<%= link_to 'Editar', edit_lugare_comida_path(@lugar, @comida), class: 'btn btn-warning' %>
+<%= link_to 'Volver', lugare_comidas_path(@lugar), class: 'btn btn-primary' %>
+<!-- Enlace para crear una reseña de la comida -->
+<%= link_to 'Deja una Reseña de la Comida', new_lugare_comida_review_path(@lugar, @comida), class: 'btn btn-primary' %>

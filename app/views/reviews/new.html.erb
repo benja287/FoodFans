@@ -1,0 +1,21 @@
+<!-- app/views/reviews/new.html.erb -->
+<h1>Crear una Reseña</h1>
+
+<%= form_with(model: @review, url: review_form_path(@lugar, @comida), local: true) do |form| %>
+  <div>
+    <%= form.label :fecha %>
+    <%= form.date_field :fecha %>
+  </div>
+
+  <div>
+    <%= form.label :puntaje %>
+    <%= form.select :puntaje, options_for_select([1, 2, 3, 4, 5]) %>
+  </div>
+
+  <div>
+    <%= form.label :opinion %>
+    <%= form.text_area :opinion %>
+  </div>
+
+  <%= form.submit 'Aceptar' %>
+<% end %>

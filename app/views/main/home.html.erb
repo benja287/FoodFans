@@ -1,46 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>TuApp</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
-</head>
+<div class="header">
+  <div class="header-content">
+    <div class="info-auth-container">
+      <div class="info">
+        <h1>Bienvenido a TuApp</h1>
+        <p>Esta es la página principal de tu aplicación Rails.</p>
+      </div>
 
-<body>
-  <img src="<%= asset_path('paginaweb.jpeg') %>" alt="Background Image" class="full-page-background">
-
-  <div class="header">
-    <div class="header-content">
-      <div class="info-auth-container">
-        <div class="info">
-          <h1>Bienvenido a TuApp</h1>
-          <p>Esta es la página principal de tu aplicación Rails.</p>
-
+      <!-- Menú desplegable -->
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          Menú
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <% if user_signed_in? %>
-          <!-- Enlace a la página de "Cargar Información" -->
-              <%= link_to 'Cargar Información', cargar_informacion_path, class: 'btn btn-primary' %>
-            <p>Usuario actual: <%= current_user.email %> - Rol: <%= current_user.admin? ? "Administrador" : "Usuario" %></p>
-          <% end %>
-
-        </div>
-        <div class="auth-links">
-          <% if user_signed_in? %>
-            <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "auth-link btn" do %>
-              <div class="auth-button">
-                <p>Cerrar Sesión</p>
-              </div>
-            <% end %>
+            <li><%= link_to 'Cargar Información', cargar_informacion_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Ver Lugares Registrados', lugares_path, class: 'dropdown-item' %></li>
+            <li>
+              <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'dropdown-item' %>
+            </li>
           <% else %>
-            <%= link_to new_user_session_path, class: "auth-link btn" do %>
-              <div class="auth-button">
-                <p>Iniciar Sesión</p>
-              </div>
-            <% end %>
+            <li><%= link_to 'Iniciar Sesión', new_user_session_path, class: 'dropdown-item' %></li>
           <% end %>
-        </div>
+        </ul>
+      </div>
+      <!-- Fin del menú desplegable -->
+
+      <div class="auth-links">
+        <% if user_signed_in? %>
+          <p>Usuario actual: <%= current_user.email %> - Rol: <%= current_user.admin? ? "Administrador" : "Usuario" %></p>
+        <% end %>
       </div>
     </div>
   </div>
-</body>
-</html>
+</div>

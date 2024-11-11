@@ -5,14 +5,42 @@
 <p>Descripción: <%= @lugar.descripcion %></p>
 
 <h2>Comidas</h2>
-<% @lugar.comidas.each do |comida| %>
-  <h3><%= comida.nombre %></h3>
-  <% if comida.foto.attached? %>
-    <%= image_tag comida.foto.variant(resize_to_limit: [300, 300]) %>
-  <% end %>
 
-  <p>Sabor: <%= comida.sabor %></p>
-  <p>Precio: <%= number_to_currency(comida.precio) %></p>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Foto</th>
+      <th>Sabor</th>
+      <th>Precio</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lugar.comidas.each do |comida| %>
+      <tr>
+        <td><%= comida.nombre %></td>
+        <td>
+          <% if comida.photo.attached? %>
+            <%= image_tag comida.photo, size: "100x100" %>
+          <% else %>
+            Sin foto
+          <% end %>
+        </td>
+        <td><%= comida.sabor %></td>
+        <td><%= number_to_currency(comida.precio) %></td>
+        <td>
+          <%= link_to 'Ver', lugare_comida_path(@lugar, comida), class: 'btn btn-info' %>
+          <%= link_to 'Editar', edit_lugare_comida_path(@lugar, comida), class: 'btn btn-warning' %>
+          <%= link_to 'Deja una Reseña del Lugar', new_lugare_review_path(@lugar), class: 'btn btn-primary' %>
+          <!-- Enlace para crear una reseña de la comida -->
+          <%= link_to 'Deja una Reseña de la Comida', new_lugare_comida_review_path(@lugar, comida), class: 'btn btn-primary' %>
 
-<%= link_to "Agregar Comida", new_lugare_comida_path(lugare_id: @lugar.id) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Agregar Comida", new_lugare_comida_path(lugare_id: @lugar.id), class: 'btn btn-primary' %>
+<%= link_to 'Volver a Inicio', root_path, class: 'btn btn-primary' %>

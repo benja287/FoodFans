@@ -1,0 +1,11 @@
+<!-- app/views/reviews/index.html.erb -->
+<h1>Reseñas</h1>
+
+<% @reviews.each do |review| %>
+  <div>
+    <h3><%= review.comida.name if review.comida %> <%= review.lugar.name if review.lugar %></h3>
+    <p><%= review.fecha %> - <%= review.puntaje %> estrellas</p>
+    <p><%= review.opinion %></p>
+    <%= link_to 'Ver detalles', review_path(review) %>
+  </div>
+<% end %>

@@ -30,12 +30,37 @@ class ComidasController < ApplicationController
       render :new
     end
   end
+  def edit
+    # Inicializa la comida que se va a editar
+    @lugar = Lugar.find(params[:lugare_id])
+    @comida = @lugar.comidas.find(params[:id])
+  end
+
+  def update
+    # Actualiza una comida asociada al lugar específico
+    @lugar = Lugar.find(params[:lugare_id])
+    @comida = @lugar.comidas.find(params[:id])
+    if @comida.update(comida_params)
+      # Redirige al perfil del lugar con un mensaje de éxito
+      redirect_to lugare_comida_path(@lugar, @comida), notice: "Comida actualizada exitosamente."
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    # Elimina una comida asociada al lugar específico
+    @lugar = Lugar.find(params[:lugare_id])
+    @comida = @lugar.comidas.find(params[:id])
+    @comida.destroy
+    redirect_to lugare_comidas_path(@lugar), notice: "Comida eliminada exitosamente."
+  end
 
   private
 
   # Define los parámetros permitidos para una comida
   def comida_params
-  params.require(:comida).permit(:nombre, :sabor, :precio, :fecha_de_registro, :descripcion, :foto, tipo_comida: [])
+  params.require(:comida).permit(:nombre, :sabor, :precio, :fecha_de_registro, :descripcion, :photo, tipo_comida: [])
 end
 
 

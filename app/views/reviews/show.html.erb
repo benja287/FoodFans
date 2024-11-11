@@ -1,0 +1,7 @@
+<!-- app/views/reviews/show.html.erb -->
+<h1>Reseña</h1>
+<p><strong>Fecha:</strong> <%= @review.fecha %></p>
+<p><strong>Puntaje:</strong> <%= @review.puntaje %> estrellas</p>
+<p><strong>Opinión:</strong> <%= @review.opinion %></p>
+
+<%= link_to 'Volver', lugar_path(@review.lugar) %>  <!-- O comida_path si es desde comida -->

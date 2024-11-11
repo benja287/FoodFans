@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2024-11-11
+  puntaje: 1
+  opinion: MyText
+  comida: one
+  lugar: one
+  usuario: one
+
+two:
+  fecha: 2024-11-11
+  puntaje: 1
+  opinion: MyText
+  comida: two
+  lugar: two
+  usuario: two
