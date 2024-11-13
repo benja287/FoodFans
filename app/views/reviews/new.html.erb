@@ -1,4 +1,4 @@
-<h1>Crear una Reseña</h1>
+<!--<h1>Crear una Reseña</h1>
 
 <% if @lugar %>
   <%= form_with(model: [@lugar, @review], local: true) do |form| %>
@@ -35,4 +35,81 @@
   <% end %>
 <% end %>
 
-<%= link_to 'Volver a Inicio', root_path, class: 'btn btn-secondary mt-3' %>
+<%= link_to 'Volver a Inicio', root_path, class: 'btn btn-secondary mt-3' %> --> 
+
+
+<header class="bg-green-700 text-white py-6 shadow-md w-full">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
+    <!-- Información de bienvenida -->
+    <div class="info">
+      <h1 class="text-3xl font-extrabold text-yellow-400">Food Fans</h1>
+      <p class="text-green-200">¡Listos para tu reseña!</p>
+    </div>
+
+    <div class="auth-links text-green-200">
+      <% if user_signed_in? %>
+        <p class="text-sm">Usuario actual: <%= current_user.email %> - Rol: <%= current_user.admin? ? "Administrador" : "Usuario" %></p>
+      <% end %>
+    </div>
+
+    <!-- Menú desplegable -->
+    <div class="relative">
+      <button data-bs-toggle="dropdown" class="flex items-center bg-green-500 text-white px-4 py-2 rounded-lg border border-green-400 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300" type="button" id="dropdownMenuButton">
+        <span class="mr-2">Menú</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+      <ul class="dropdown-menu absolute right-0 mt-2 w-56 bg-white border border-green-200 rounded-lg shadow-lg hidden z-20">
+        <% if user_signed_in? %>
+          <li>
+            <%= link_to 'Cargar Información', cargar_informacion_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+          </li>
+          <li>
+            <%= link_to 'Ver Lugares Registrados', lugares_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+          </li>
+          <li>
+            <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to 'Iniciar Sesión', new_user_session_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</header>
+
+ <div class="text-center mt-6">
+  <h1 class="text-3xl font-bold text-yellow-400 mb-6">
+    Crear Reseña de la comida  <%= @comida.nombre %>
+  </h1>
+</div>
+
+<div class="max-w-3xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+
+
+  <%= form_with(model: @review, url: review_form_path(@lugar, @comida), local: true) do |form| %>
+    <div class="mb-4">
+      <%= form.label :fecha, class: 'block text-green-700 font-medium mb-1' %>
+      <%= form.date_field :fecha, class: 'w-full border border-green-300 rounded-lg px-3 py-2 focus:ring focus:ring-green-200' %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :puntaje, class: 'block text-green-700 font-medium mb-1' %>
+      <%= form.select :puntaje, options_for_select([1, 2, 3, 4, 5]), {}, class: 'w-full border border-green-300 rounded-lg px-3 py-2 focus:ring focus:ring-green-200' %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :opinion, class: 'block text-green-700 font-medium mb-1' %>
+      <%= form.text_area :opinion, class: 'w-full border border-green-300 rounded-lg px-3 py-2 focus:ring focus:ring-green-200', rows: 5 %>
+    </div>
+
+    <%= form.submit 'Aceptar', class: 'bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300' %>
+  <% end %>
+</div>
+
+<div class="text-center mt-6">
+  <%= link_to 'Volver a Inicio', root_path, class: 'inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
+</div>
