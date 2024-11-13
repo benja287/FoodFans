@@ -1,9 +1,12 @@
-import { Application } from "@hotwired/stimulus"
+// Importa Turbo para manejar los métodos DELETE y otros métodos HTTP
+import { Turbo } from "@hotwired/turbo-rails";
+Turbo.start();
 
-const application = Application.start()
+// Importa Stimulus
+import { Application } from "@hotwired/stimulus";
 
-// Configure Stimulus development experience
-application.debug = false
-window.Stimulus   = application
+const application = Application.start();
+application.debug = false;
+window.Stimulus = application;
 
-export { application }
+export { application };
