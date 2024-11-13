@@ -29,7 +29,7 @@
             <%= link_to 'Ver Lugares Registrados', lugares_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
           <li>
-            <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+              <%= button_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
         <% else %>
           <li>
