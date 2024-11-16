@@ -7,6 +7,7 @@ class LugaresController < ApplicationController
 
   def create
     @lugar = Lugar.new(lugar_params)
+    @lugar.user = current_user
     if @lugar.save
       # Redirige a la lista de lugares (lugares_path) después de un registro exitoso
       redirect_to lugares_path, notice: "Lugar registrado exitosamente."

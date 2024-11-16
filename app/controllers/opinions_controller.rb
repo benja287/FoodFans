@@ -19,10 +19,11 @@ class OpinionsController < ApplicationController
     @opinion = Opinion.new(opinion_params)
     @opinion.user = current_user
 
-    if params[:lugar_id]
-      @opinion.lugar = @lugar
-    elsif params[:comida_id]
-      @opinion.comida = @comida
+    # Asocia la opinión al @reviewable (lugar o comida)
+    if @reviewable.is_a?(Lugar)
+      @opinion.lugar = @reviewable
+    elsif @reviewable.is_a?(Comida)
+      @opinion.comida = @reviewable
     end
 
     if @opinion.save
@@ -34,22 +35,27 @@ class OpinionsController < ApplicationController
 
   private
 
+  # Establece el objeto revisado (lugar o comida)
   def set_reviewable
-    @lugar = Lugar.find(params[:lugar_id]) if params[:lugar_id]
-    @comida = Comida.find(params[:comida_id]) if params[:comida_id]
+    if params[:lugar_id]
+      @reviewable = Lugar.find(params[:lugar_id])
+    elsif params[:comida_id]
+      @reviewable = Comida.find(params[:comida_id])
+    end
   end
 
   def opinion_params
     params.require(:opinion).permit(:fecha, :puntaje, :comentario)
   end
 
+  # Redirige después de la creación de la opinión
   def after_create_path
-    if @opinion.lugar
-      lugare_path(@opinion.lugar)
-    elsif @opinion.comida
-      lugare_comida_path(@opinion.comida.lugar, @opinion.comida)
+    if @reviewable.is_a?(Lugar)
+      lugar_path(@reviewable)  # Redirige al lugar
+    elsif @reviewable.is_a?(Comida)
+      lugar_comida_path(@reviewable.lugar, @reviewable)  # Redirige a la comida dentro del lugar
     else
-      opinions_index_path
+      opinions_index_path  # Redirige al índice de opiniones en caso de error
     end
   end
 end

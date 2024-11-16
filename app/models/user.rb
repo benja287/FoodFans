@@ -17,4 +17,5 @@ class User < ApplicationRecord
     self.role ||= :user
   end
   has_many :opinions, dependent: :destroy
+  has_many :lugares
 end
