@@ -8,16 +8,21 @@ class OpinionsController < ApplicationController
   end
 
   def show
-    @opinion = Opinion.find(params[:id])
+     @opinions = @reviewable.opinions
   end
 
   def new
-    @opinion = Opinion.new
-  end
+   # Verifica que @reviewable esté siendo asignado correctamente
+   if @reviewable.nil?
+     redirect_to root_path, alert: 'No se especificó un recurso para la opinión.'
+   end
+   @opinion = @reviewable.opinions.build
+ end
 
   def create
     @opinion = Opinion.new(opinion_params)
     @opinion.user = current_user
+    @opinion.fecha = Date.today # Asigna la fecha actual
 
     # Asocia la opinión al @reviewable (lugar o comida)
     if @reviewable.is_a?(Lugar)
@@ -37,10 +42,12 @@ class OpinionsController < ApplicationController
 
   # Establece el objeto revisado (lugar o comida)
   def set_reviewable
-    if params[:lugar_id]
-      @reviewable = Lugar.find(params[:lugar_id])
+    if params[:lugare_id]
+      @reviewable = Lugar.find(params[:lugare_id])
     elsif params[:comida_id]
       @reviewable = Comida.find(params[:comida_id])
+    else
+      @reviewable = nil
     end
   end
 
@@ -51,9 +58,9 @@ class OpinionsController < ApplicationController
   # Redirige después de la creación de la opinión
   def after_create_path
     if @reviewable.is_a?(Lugar)
-      lugar_path(@reviewable)  # Redirige al lugar
+      lugare_opinions_path(@reviewable)  # Redirige al lugar
     elsif @reviewable.is_a?(Comida)
-      lugar_comida_path(@reviewable.lugar, @reviewable)  # Redirige a la comida dentro del lugar
+      lugare_comida_opinions_path(@reviewable.lugar, @reviewable)  # Redirige a la comida dentro del lugar
     else
       opinions_index_path  # Redirige al índice de opiniones en caso de error
     end

@@ -1,4 +1,3 @@
-# app/views/opinions/index.html.erb
 <div class="container mt-4">
   <h1>Opiniones</h1>
 
@@ -8,15 +7,21 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <%= opinion.lugar ? opinion.lugar.nombre : opinion.comida.nombre %>
+              <%= opinion.lugar ? opinion.lugar.nombre : (opinion.comida ? opinion.comida.nombre : "Comida no disponible") %>
             </h5>
             <p class="card-text">
-              <strong>Fecha:</strong> <%= opinion.fecha %><br>
+              <strong>Fecha:</strong>
+              <%= opinion.fecha.present? ? opinion.fecha.strftime("%d/%m/%Y") : "Fecha no disponible" %><br>
               <strong>Puntaje:</strong> <%= "⭐" * opinion.puntaje %><br>
-              <strong>Comentario:</strong> <%= opinion.comentario %>
+              <strong>Comentario:</strong> <%= opinion.comentario %><br>
             </p>
             <small class="text-muted">Por: <%= opinion.user.email %></small>
           </div>
+          <% if opinion.lugar %>
+            <div class="card-footer">
+              <%= link_to 'Volver al perfil del lugar', lugare_path(opinion.lugar), class: 'btn btn-primary' %>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>

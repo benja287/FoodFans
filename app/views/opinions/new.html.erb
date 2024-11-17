@@ -1,7 +1,8 @@
 <div class="container mt-4">
   <h1>Nueva Opinión</h1>
 
-  <%= form_with(model: @opinion, url: reviewable_opinions_path(@reviewable), local: true) do |form| %>
+  <%= form_with(model: @opinion, url: @reviewable.is_a?(Lugar) ? lugare_opinions_path(@reviewable) : lugare_comida_opinions_path(@reviewable.lugar, @reviewable), local: true) do |form| %>
+
     <% if @opinion.errors.any? %>
       <div class="alert alert-danger">
         <h2><%= pluralize(@opinion.errors.count, "error") %> impidieron guardar esta opinión:</h2>
@@ -12,11 +13,6 @@
         </ul>
       </div>
     <% end %>
-
-    <div class="form-group">
-      <%= form.label :fecha %>
-      <%= form.date_field :fecha, class: 'form-control' %>
-    </div>
 
     <div class="form-group">
       <%= form.label :puntaje %>

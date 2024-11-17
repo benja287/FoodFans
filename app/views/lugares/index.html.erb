@@ -41,6 +41,14 @@
   </div>
 </header>
 
+<!-- Formulario de búsqueda -->
+<div class="flex justify-center items-center mb-6 mt-6">
+  <%= form_with url: lugares_path, method: :get, local: true, class: 'flex items-center' do %>
+    <%= text_field_tag :search, params[:search], placeholder: 'Buscar por nombre del lugar...', class: 'px-4 py-2 rounded-l-lg border border-green-400' %>
+    <%= submit_tag 'Buscar', class: 'bg-green-600 text-white px-4 py-2 rounded-r-lg hover:bg-green-700 transition duration-300' %>
+  <% end %>
+</div>
+
 <div class="flex justify-around items-center mb-6 mt-3">
   <h1 class="text-3xl font-bold text-yellow-400">Lugares Registrados</h1>
   <%= link_to 'Registrar un nuevo lugar', new_lugare_path, class: 'inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300' %>
@@ -48,16 +56,18 @@
 
 <div class="px-4 md:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
   <% @lugares.where(user: current_user).each do |lugar| %> <!-- Filtrado de lugares por el usuario logueado -->
-    <div class="border border-green-200 bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-      <h2 class="text-xl font-semibold text-green-700 mb-2"><%= lugar.nombre %></h2>
-      <p class="text-green-800"><strong>Dirección:</strong> <%= lugar.direccion %></p>
-      <p class="text-green-800"><strong>Tipo:</strong> <%= lugar.tipo %></p>
-      <p class="text-green-800"><strong>Puntaje:</strong> <%= lugar.puntaje %></p>
-      <p class="text-green-800 mb-2"><strong>Descripción:</strong> <%= lugar.descripcion %></p>
-      <p class="text-green-800 text-sm"><strong>Fecha de Registro:</strong> <%= lugar.fecha_de_registro %></p>
-      <p class="text-green-800 text-sm"><strong>Registrado por:</strong> <%= lugar.user.email %></p> <!-- Mostrar correo del usuario -->
-      <%= link_to 'Ver', lugare_path(lugar), class: 'inline-block mt-3 bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition duration-300' %>
-    </div>
+    <% if params[:search].blank? || lugar.nombre.downcase.include?(params[:search].downcase) %>
+      <div class="border border-green-200 bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+        <h2 class="text-xl font-semibold text-green-700 mb-2"><%= lugar.nombre %></h2>
+        <p class="text-green-800"><strong>Dirección:</strong> <%= lugar.direccion %></p>
+        <p class="text-green-800"><strong>Tipo:</strong> <%= lugar.tipo %></p>
+        <p class="text-green-800"><strong>Puntaje:</strong> <%= "⭐" * lugar.puntaje %></p>
+        <p class="text-green-800 mb-2"><strong>Descripción:</strong> <%= lugar.descripcion %></p>
+        <p class="text-green-800 text-sm"><strong>Fecha de Registro:</strong> <%= lugar.fecha_de_registro.present? ? lugar.fecha_de_registro.strftime("%d/%m/%Y") : "Fecha no disponible" %></p>
+        <p class="text-green-800 text-sm"><strong>Registrado por:</strong> <%= lugar.user.email %></p> <!-- Mostrar correo del usuario -->
+        <%= link_to 'Ver', lugare_path(lugar), class: 'inline-block mt-3 bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition duration-300' %>
+      </div>
+    <% end %>
   <% end %>
 </div>
 

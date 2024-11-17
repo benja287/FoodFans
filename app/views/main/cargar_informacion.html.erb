@@ -1,4 +1,27 @@
 <!-- app/views/main/cargar_informacion.html.erb -->
-<h1>Cargar Información</h1>
+<header class="bg-green-700 text-white py-6 shadow-md w-full">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
+    <!-- Información de bienvenida -->
+    <div class="info">
+      <h1 class="text-3xl font-extrabold text-yellow-400">Food Fans</h1>
+      <p class="text-green-200">¡Listos para tu reseña!</p>
+    </div>
 
-<%= link_to 'Cargar Lugar', new_lugare_path, class: 'btn btn-primary' %>
+    <div class="auth-links text-green-200">
+      <% if user_signed_in? %>
+        <p class="text-sm">Usuario actual: <%= current_user.email %> - Rol: <%= current_user.admin? ? "Administrador" : "Usuario" %></p>
+      <% end %>
+    </div>
+
+
+</header>
+
+<!-- Contenido específico de la vista Cargar Información -->
+<div class="container mt-6">
+   <h1 class="text-3xl font-extrabold text-yellow-400">Cargar Informacion</h1>
+
+  <%= link_to 'Cargar Lugar', new_lugare_path,class: 'inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
+</div>
+<div class="text-center mt-6">
+  <%= link_to 'Volver a Inicio', root_path, class: 'inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
+</div>
