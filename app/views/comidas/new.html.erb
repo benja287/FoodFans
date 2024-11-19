@@ -47,6 +47,27 @@
     Registrar Comida de <%= @lugar.nombre %>
   </h1>
 </div>
+<!-- Agregar mensajes de error -->
+<% if flash[:alert] %>
+  <div class="max-w-2xl mx-auto mb-4">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <%= flash[:alert] %>
+    </div>
+  </div>
+<% end %>
+
+<% if @comida.errors.any? %>
+  <div class="max-w-2xl mx-auto mb-4">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+      <ul>
+        <% @comida.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
 
 
 <%= form_with model: [@lugar, @comida], url: lugare_comidas_path(@lugar), local: true, multipart: true, html: { class: 'space-y-4 max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md border border-green-200' } do |form| %>
