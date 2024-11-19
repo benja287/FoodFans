@@ -1,29 +1,33 @@
 <div class="container mt-4">
   <h1>Opiniones</h1>
 
-  <div class="row">
-    <% @opinions.each do |opinion| %>
-      <div class="col-md-6 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">
-              <%= opinion.lugar ? opinion.lugar.nombre : (opinion.comida ? opinion.comida.nombre : "Comida no disponible") %>
-            </h5>
-            <p class="card-text">
-              <strong>Fecha:</strong>
-              <%= opinion.fecha.present? ? opinion.fecha.strftime("%d/%m/%Y") : "Fecha no disponible" %><br>
-              <strong>Puntaje:</strong> <%= "⭐" * opinion.puntaje %><br>
-              <strong>Comentario:</strong> <%= opinion.comentario %><br>
-            </p>
-            <small class="text-muted">Por: <%= opinion.user.email %></small>
-          </div>
-          <% if opinion.lugar %>
-            <div class="card-footer">
-              <%= link_to 'Volver al perfil del lugar', lugare_path(opinion.lugar), class: 'btn btn-primary' %>
+  <% if @opinions.empty? %>
+    <p class="text-center text-muted mt-4">No hay opiniones disponibles.</p>
+  <% else %>
+    <div class="row">
+      <% @opinions.each do |opinion| %>
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= opinion.lugar ? opinion.lugar.nombre : (opinion.comida ? opinion.comida.nombre : "Comida no disponible") %>
+              </h5>
+              <p class="card-text">
+                <strong>Fecha:</strong>
+                <%= opinion.fecha.present? ? opinion.fecha.strftime("%d/%m/%Y") : "Fecha no disponible" %><br>
+                <strong>Puntaje:</strong> <%= "⭐" * opinion.puntaje %><br>
+                <strong>Comentario:</strong> <%= opinion.comentario %><br>
+              </p>
+              <small class="text-muted">Por: <%= opinion.user.email %></small>
             </div>
-          <% end %>
+            <% if opinion.lugar %>
+              <div class="card-footer">
+                <%= link_to 'Volver al perfil del lugar', lugare_path(opinion.lugar), class: 'btn btn-primary' %>
+              </div>
+            <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

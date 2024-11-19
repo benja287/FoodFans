@@ -24,7 +24,9 @@
       <%= form.text_area :comentario, class: 'form-control' %>
     </div>
 
-    <%= form.submit 'Crear Opinión', class: 'btn btn-primary mt-3' %>
+    <div class="text-center">
+      <%= form.submit "Crear opinion",class: 'btn btn-success', onclick: "return confirm('¿Estás seguro de que quieres cargar el lugar? ');" %>
+    </div>
   <% end %>
 
   <%= link_to 'Volver', :back, class: 'btn btn-secondary mt-3' %>

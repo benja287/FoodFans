@@ -68,29 +68,48 @@
 
   <h2 class="text-2xl font-semibold text-yellow-400 mb-4">Comidas</h2>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    <% @lugar.comidas.each do |comida| %>
-      <div class="border border-green-200 rounded-lg bg-white shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-        <h3 class="text-xl font-bold text-green-700 mb-2"><%= comida.nombre %></h3>
-        <div class="mb-2">
-          <% if comida.photo.attached? %>
-            <%= image_tag comida.photo, class: 'w-full h-32 object-cover rounded mb-2' %>
-          <% else %>
-            <div class="w-full h-32 bg-gray-200 flex items-center justify-center rounded mb-2">Sin foto</div>
-          <% end %>
-        </div>
-        <p class="text-green-800 mb-1"><strong>Sabor:</strong> <%= comida.sabor %></p>
-        <p class="text-green-800 mb-1"><strong>Precio:</strong> <%= number_to_currency(comida.precio) %></p>
-        <p class="text-green-800 mb-1"><strong>Tipo de Comida:</strong> <%= JSON.parse(comida.tipo_comida).join(", ") %></p>
+<% filtered_comidas = @lugar.comidas %> <!-- Comidas asociadas al lugar -->
 
-          <p class="text-green-800 mb-1"><strong>Fecha :</strong> <%= comida.fecha_de_registro.present? ? comida.fecha_de_registro.strftime("%d/%m/%Y") : "Fecha no disponible"  %></p>
-        <div class="mt-3 space-x-2">
-          <%= link_to 'Ver', lugare_comida_path(@lugar, comida), class: 'inline-block bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-300' %>
-          <%= link_to 'Editar', edit_lugare_comida_path(@lugar, comida), class: 'inline-block bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition duration-300' %>
+<% if params[:search].present? %>
+  <% filtered_comidas = filtered_comidas.select { |comida| comida.nombre.downcase.include?(params[:search].downcase) } %>
+<% end %>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  <% if @lugar.comidas.any? %> <!-- Si hay comidas registradas -->
+    <% if filtered_comidas.any? %> <!-- Si hay resultados que coinciden con el filtro -->
+      <% filtered_comidas.each do |comida| %>
+        <div class="border border-green-200 rounded-lg bg-white shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+          <h3 class="text-xl font-bold text-green-700 mb-2"><%= comida.nombre %></h3>
+          <div class="mb-2">
+            <% if comida.photo.attached? %>
+              <%= image_tag comida.photo, class: 'w-full h-32 object-cover rounded mb-2' %>
+            <% else %>
+              <div class="w-full h-32 bg-gray-200 flex items-center justify-center rounded mb-2">Sin foto</div>
+            <% end %>
+          </div>
+          <p class="text-green-800 mb-1"><strong>Sabor:</strong> <%= comida.sabor %></p>
+          <p class="text-green-800 mb-1"><strong>Precio:</strong> <%= number_to_currency(comida.precio) %></p>
+          <p class="text-green-800 mb-1"><strong>Tipo de Comida:</strong> <%= comida.tipo_comida %></p>
+          <p class="text-green-800 mb-1"><strong>Fecha :</strong> <%= comida.fecha_de_registro.present? ? comida.fecha_de_registro.strftime("%d/%m/%Y") : "Fecha no disponible" %></p>
+          <div class="mt-3 space-x-2">
+            <%= link_to 'Ver', lugare_comida_path(@lugar, comida), class: 'inline-block bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-300' %>
+            <%= link_to 'Editar', edit_lugare_comida_path(@lugar, comida), class: 'inline-block bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition duration-300' %>
+          </div>
         </div>
+      <% end %>
+    <% else %> <!-- No hay resultados filtrados -->
+      <div class="col-span-1 sm:col-span-2 md:col-span-3 text-center">
+        <p class="text-green-700 text-lg font-semibold">La comida buscada no se encuentra cargada en el sistema.</p>
       </div>
     <% end %>
-  </div>
+  <% else %> <!-- No hay comidas registradas -->
+    <div class="col-span-1 sm:col-span-2 md:col-span-3 text-center">
+      <p class="text-green-700 text-lg font-semibold">No hay comidas disponibles.</p>
+    </div>
+  <% end %>
+</div>
+
+
 
   <div class="mt-6">
     <%= link_to "Agregar Comida", new_lugare_comida_path(lugare_id: @lugar.id), class: 'inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300' %>

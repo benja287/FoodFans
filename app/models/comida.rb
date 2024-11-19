@@ -5,7 +5,7 @@ class Comida < ApplicationRecord
   validates :nombre, :precio, :sabor, presence: true
   validates :precio, numericality: { greater_than: 0, message: "debe ser un número positivo" }
   validate :validate_unique_food_name
-  validate :validate_tipo_comida_count
+  validate :validate_tipo_comida
 
   private
 
@@ -18,13 +18,13 @@ class Comida < ApplicationRecord
     end
   end
 
-  def validate_tipo_comida_count
-    # Asegúrate de que tipo_comida es un array antes de contar
-    selected_types = tipo_comida.is_a?(Array) ? tipo_comida.reject(&:blank?) : []
+  private
 
-    if selected_types.length > 3
+  def validate_tipo_comida
+    tipos = tipo_comida.to_s.split(',').map(&:strip)
+    if tipos.length > 3
       errors.add(:tipo_comida, "Solo puedes seleccionar hasta 3 tipos de comida")
-    elsif selected_types.empty?
+    elsif tipos.empty?
       errors.add(:tipo_comida, "Debes seleccionar al menos un tipo de comida")
     end
   end

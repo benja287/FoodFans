@@ -31,6 +31,16 @@ class ComidasController < ApplicationController
     @lugar = Lugar.find(params[:lugare_id])
     @comida = @lugar.comidas.new(comida_params)
     @comida.fecha_de_registro =Date.today
+    # Procesar tipos de comida
+  if params[:comida] && params[:comida][:tipo_comida]
+    # Convierte a array si es un string
+    tipos = params[:comida][:tipo_comida]
+    tipos = [tipos] if tipos.is_a?(String)
+
+    # Une los tipos, eliminando valores vacíos
+    @comida.tipo_comida = tipos.compact.join(',')
+  end
+
     if @comida.save
       # Redirige al perfil del lugar con un mensaje de éxito
       redirect_to lugare_path(@lugar), notice: "Comida registrada exitosamente."
