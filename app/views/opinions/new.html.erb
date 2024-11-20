@@ -14,6 +14,12 @@
       </div>
     <% end %>
 
+    <!-- Campo oculto para lugar_id si es un lugar -->
+    <%= form.hidden_field :lugar_id, value: @reviewable.id if @reviewable.is_a?(Lugar) %>
+
+    <!-- Campo oculto para comida_id si es una comida -->
+    <%= form.hidden_field :comida_id, value: @reviewable.id if @reviewable.is_a?(Comida) %>
+
     <div class="form-group">
       <%= form.label :puntaje %>
       <%= form.select :puntaje, options_for_select([1, 2, 3, 4, 5]), {}, class: 'form-control' %>
@@ -25,7 +31,7 @@
     </div>
 
     <div class="text-center">
-      <%= form.submit "Crear opinion",class: 'btn btn-success', onclick: "return confirm('¿Estás seguro de que quieres cargar la reseña? ');" %>
+      <%= form.submit "Crear opinión", class: 'btn btn-success', onclick: "return confirm('¿Estás seguro de que quieres cargar la reseña?');" %>
     </div>
   <% end %>
 

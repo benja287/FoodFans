@@ -29,8 +29,20 @@
             <%= link_to 'Ver Lugares Registrados', lugares_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
           <li>
-          <%= link_to "Ver Todas las Opiniones", opinions_index_path, class: 'inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300' %>
-          </li>
+            <% @lugares.each do |lugar| %>
+   <h3><%= lugar.nombre %></h3>  <!-- Muestra el nombre del lugar -->
+
+   <% if lugar.comidas.any? %>
+     <% lugar.comidas.each do |comida| %>
+       <%= link_to "Ver Opiniones de la comida: #{comida.nombre}", lugare_comida_opinions_path(lugare_id: lugar.id, comida_id: comida.id), class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+     <% end %>
+   <% else %>
+     <span class="text-gray-500">No hay comidas disponibles</span>
+   <% end %>
+
+ <% end %>
+
+         </li>
           <li>
             <%= button_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>

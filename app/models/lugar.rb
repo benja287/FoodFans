@@ -3,7 +3,7 @@ class Lugar < ApplicationRecord
   has_many :opinions, dependent: :destroy
   belongs_to :user
   validates :nombre, :direccion, :tipo, :puntaje, :descripcion, :fecha_de_registro, presence: true
-  
+
   validates :puntaje, inclusion: { in: 1..5, message: "debe estar entre 1 y 5 estrellas" }
   validate :validate_unique_location
 

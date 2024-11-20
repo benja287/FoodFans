@@ -1,34 +1,35 @@
-# app/controllers/opinions_controller.rb
 class OpinionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_reviewable, only: [:new, :create]
+  before_action :set_reviewable, only: [:index, :new, :create]
 
   def index
-    @opinions = Opinion.all
-  end
-
-  def show
-     @opinions = @reviewable.opinions
+    if params[:lugare_id] && params[:comida_id]
+      @lugar = Lugar.find(params[:lugare_id])
+      @comida = @lugar.comidas.find(params[:comida_id])
+      @opinions = @comida.opinions
+    elsif params[:lugare_id]
+      @lugar = Lugar.find(params[:lugare_id])
+      @opinions = @lugar.opinions
+    else
+      @opinions = Opinion.all
+    end
   end
 
   def new
-   # Verifica que @reviewable esté siendo asignado correctamente
-   if @reviewable.nil?
-     redirect_to root_path, alert: 'No se especificó un recurso para la opinión.'
-   end
-   @opinion = @reviewable.opinions.build
- end
+    @opinion = @reviewable.opinions.build
+  end
 
   def create
-    @opinion = Opinion.new(opinion_params)
+    @opinion = @reviewable.opinions.build(opinion_params)
     @opinion.user = current_user
-    @opinion.fecha = Date.today # Asigna la fecha actual
+    @opinion.fecha = Date.today
 
-    # Asocia la opinión al @reviewable (lugar o comida)
-    if @reviewable.is_a?(Lugar)
-      @opinion.lugar = @reviewable
-    elsif @reviewable.is_a?(Comida)
-      @opinion.comida = @reviewable
+    # Asignar lugar_id y comida_id según el tipo de recurso
+    if @reviewable.is_a?(Comida)
+      @opinion.lugar_id = @reviewable.lugar.id  # Asignar el lugar de la comida
+      @opinion.comida_id = @reviewable.id      # Asignar el id de la comida
+    elsif @reviewable.is_a?(Lugar)
+      @opinion.lugar_id = @reviewable.id       # Solo asignar el lugar
     end
 
     if @opinion.save
@@ -40,29 +41,28 @@ class OpinionsController < ApplicationController
 
   private
 
-  # Establece el objeto revisado (lugar o comida)
   def set_reviewable
-    if params[:lugare_id]
-      @reviewable = Lugar.find(params[:lugare_id])
-    elsif params[:comida_id]
-      @reviewable = Comida.find(params[:comida_id])
-    else
-      @reviewable = nil
+    @reviewable = if params[:lugare_id] && !params[:comida_id]
+                    Lugar.find(params[:lugare_id])
+                  elsif params[:lugare_id] && params[:comida_id]
+                    Lugar.find(params[:lugare_id]).comidas.find(params[:comida_id])
+                  end
+
+    unless @reviewable
+      redirect_to root_path, alert: 'No se encontró el recurso para la opinión.'
     end
   end
 
   def opinion_params
-    params.require(:opinion).permit(:fecha, :puntaje, :comentario)
+    params.require(:opinion).permit(:puntaje, :comentario)
   end
 
-  # Redirige después de la creación de la opinión
   def after_create_path
-    if @reviewable.is_a?(Lugar)
-      lugare_opinions_path(@reviewable)  # Redirige al lugar
-    elsif @reviewable.is_a?(Comida)
-      lugare_comida_opinions_path(@reviewable.lugar, @reviewable)  # Redirige a la comida dentro del lugar
-    else
-      opinions_index_path  # Redirige al índice de opiniones en caso de error
-    end
+  case @reviewable
+  when Lugar
+    lugare_opinions_path(@reviewable) # Redirigir a las opiniones del lugar
+  when Comida
+    lugare_comida_opinions_path(@reviewable.lugar, @reviewable) # Redirigir a las opiniones de la comida
   end
+end
 end
