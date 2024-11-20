@@ -49,7 +49,9 @@
 
     <% @lugares.each do |lugar| %>
       <div class="mb-6">
-        <h3 class="text-xl font-semibold text-yellow-400"><%= lugar.nombre %></h3> <!-- Muestra el nombre del lugar -->
+        <h3 class="text-xl font-semibold text-yellow-400">Nombre: <%= lugar.nombre %></h3> <!-- Muestra el nombre del lugar -->
+        <h3 class="text-xl font-semibold text-yellow-400">Dirección: <%= lugar.direccion %></h3> <!-- Muestra la dirección del lugar -->
+
 
         <!-- Mostrar el nombre del usuario que agregó el lugar -->
         <p class="text-sm text-gray-500">Propietario: <%= lugar.user.email %></p> <!-- Asegúrate de que 'usuario' sea la relación correcta -->
