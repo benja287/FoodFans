@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h1>Opiniones</h1>
+
+  <% if @lugar.present? && @comida.present? %>
+    <h2>Opiniones para la comida <%= @comida.nombre %> en <%= @lugar.nombre %></h2>
+
+    <%# Mostrar la foto de la comida si está disponible %>
+    <% if @comida.photo.attached? %>
+      <div class="mt-3">
+        <%= image_tag @comida.photo, alt: @comida.nombre, class: 'img-fluid' %>
+      </div>
+    <% else %>
+      <p>No hay foto disponible para esta comida.</p>
+    <% end %>
+
+  <% elsif @lugar.present? %>
+    <h2>Opiniones para <%= @lugar.nombre %></h2>
+  <% else %>
+    <h2>Opiniones generales</h2>
+  <% end %>
+
+  <% if @opinions.any? %>
+    <ul class="list-group">
+      <% @opinions.each do |opinion| %>
+        <li class="list-group-item">
+          <strong><%= opinion.user.email %></strong> - <%= opinion.fecha %>
+          <br>
+          <%= "⭐" * opinion.puntaje %>
+          <p><%= opinion.comentario %></p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No hay opiniones aún.</p>
+  <% end %>
+
+  
+</div>
+
+<div class="text-center mt-6">
+  <%= link_to 'Volver a Inicio', root_path, class: 'inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
+</div>

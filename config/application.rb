@@ -1,5 +1,4 @@
 require_relative "boot"
-
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
@@ -10,6 +9,10 @@ module Aplicacion
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+
+    # Configura el idioma por defecto a español
+    config.i18n.default_locale = :es
+    config.i18n.available_locales = [:es]
 
     # Configuration for the application, engines, and railties goes here.
     #

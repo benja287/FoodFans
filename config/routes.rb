@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  get 'reviews/index'
-  get 'reviews/new'
-  get 'reviews/show'
+  get 'opinions/index'
+  get 'opinions/show'
+  get 'opinions/new'
+  get 'opinions/create'
 
   devise_for :admins, controllers: {
     registrations: 'admin/registrations'
@@ -17,18 +18,19 @@ Rails.application.routes.draw do
   get 'cargar_informacion', to: 'main#cargar_informacion'  # Cargar Información en el controlador Main
 
   resources :lugares do
-    # Reseñas asociadas a un lugar
-    resources :reviews, only: [:new, :create, :index]
+     resources :opinions, only: [:new, :create, :index, :show]
+     resources :comidas, only: [:index, :show, :new, :create, :edit, :destroy, :update] do
+       resources :opinions, only: [:new, :create, :index, :show]
+     end
+   end
 
-    resources :comidas, only: [:index, :show, :new, :create, :edit, :destroy, :update] do
-      # Reseñas asociadas a una comida de un lugar específico
-      resources :reviews, only: [:new, :create, :index]
-    end
-  end
+   # Ruta para ver todas las opiniones
+   resources :opinions, only: [:index, :show]
 
   resources :usuarios, only: [:index, :show]
 
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+
 
   root 'main#home'
 end

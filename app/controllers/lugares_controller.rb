@@ -7,6 +7,8 @@ class LugaresController < ApplicationController
 
   def create
     @lugar = Lugar.new(lugar_params)
+    @lugar.user = current_user
+    @lugar.fecha_de_registro=Date.today
     if @lugar.save
       # Redirige a la lista de lugares (lugares_path) después de un registro exitoso
       redirect_to lugares_path, notice: "Lugar registrado exitosamente."
@@ -16,6 +18,10 @@ class LugaresController < ApplicationController
   end
   def index
     @lugares = Lugar.all
+
+    if params[:search].present?
+      @lugares = @lugares.where("nombre LIKE ?", "%#{params[:search]}%")
+    end
   end
   def show
     @lugar = Lugar.find(params[:id])

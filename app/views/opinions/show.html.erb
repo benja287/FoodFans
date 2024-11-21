@@ -1,0 +1,21 @@
+# app/views/opinions/show.html.erb
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">
+        Opinión sobre
+        <%= @opinion.lugar ? @opinion.lugar.nombre : @opinion.comida.nombre %>
+      </h5>
+
+      <p class="card-text">
+        <strong>Fecha:</strong> <%= @opinion.fecha %><br>
+        <strong>Puntaje:</strong> <%= "⭐" * @opinion.puntaje %><br>
+        <strong>Comentario:</strong> <%= @opinion.comentario %>
+      </p>
+
+      <small class="text-muted">Por: <%= @opinion.user.email %></small>
+    </div>
+  </div>
+
+  <%= link_to 'Volver', :back, class: 'btn btn-secondary mt-3' %>
+</div>

@@ -1,17 +1,22 @@
-<h1><%= @comida.nombre %></h1>
-<p>Sabor: <%= @comida.sabor %></p>
-<p>Precio: <%= number_to_currency(@comida.precio) %></p>
-<p>Fecha de Registro: <%= @comida.fecha_de_registro %></p>
+<h1 class="text-3xl font-extrabold text-yellow-400 mb-4"><%= @comida.nombre %></h1>
 
+<div class="bg-white border border-green-200 rounded-lg shadow-md p-6 mb-6">
+  <p class="text-green-800 text-lg mb-2"><strong>Sabor:</strong> <%= @comida.sabor %></p>
+  <p class="text-green-800 text-lg mb-2"><strong>Precio:</strong> <%= number_to_currency(@comida.precio) %></p>
+  <p class="text-green-800 text-lg mb-4"><strong>Fecha de Registro:</strong> <%= @comida.fecha_de_registro.present? ? @comida.fecha_de_registro.strftime("%d/%m/%Y") : "Fecha no disponible" %></p>
 
-<% if @comida.photo.attached? %>
-  <p>Foto:</p>
-  <%= image_tag @comida.photo, size: "200x200" %>
-<% else %>
-  <p>Sin foto</p>
-<% end %>
+  <% if @comida.photo.attached? %>
+    <div class="mb-4">
+      <p class="text-green-800 font-semibold">Foto:</p>
+      <%= image_tag @comida.photo, size: "200x200", class: "rounded-lg shadow-md" %>
+    </div>
+  <% else %>
+    <p class="text-green-800">Sin foto</p>
+  <% end %>
+</div>
 
-<%= link_to 'Editar', edit_lugare_comida_path(@lugar, @comida), class: 'btn btn-warning' %>
-<%= link_to 'Volver', lugare_comidas_path(@lugar), class: 'btn btn-primary' %>
-<!-- Enlace para crear una reseña de la comida -->
-<%= link_to 'Deja una Reseña de la Comida', new_lugare_comida_review_path(@lugar, @comida), class: 'btn btn-primary' %>
+<div class="flex justify-center gap-4">
+  <%= link_to 'Editar', edit_lugare_comida_path(@lugar, @comida), class: 'bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500 transition duration-300' %>
+  <%= link_to 'Volver', lugare_path(@lugar), class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
+  <%= link_to 'Agregar Opinión', new_lugare_comida_opinion_path(@lugar, @comida), class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
+</div>

@@ -6,7 +6,10 @@ es:
     passwords:
       send_instructions: "Recibirás un email con instrucciones para cambiar tu contraseña."
     failure:
-      invalid: "Email o contraseña incorrectos."
+      not_found_in_database: "El email ingresado no se encuentra registrado"
+      invalid: "La contraseña no es válida. Intente nuevamente"
+      # Mantén el mensaje genérico como respaldo
+      invalid_generic: "Email o contraseña incorrectos."
   errors:
     messages:
       too_short: "La contraseña es demasiado corta (mínimo son %{count} caracteres)"
