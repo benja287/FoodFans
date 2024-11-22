@@ -45,7 +45,6 @@
   </div>
 </header>
 
-<!-- Mostrar los lugares y las opiniones de las comidas-->
 <% if user_signed_in? %>
   <div class="container mt-6">
     <h2 class="text-2xl font-bold text-green-700">Reseñas de Comidas en Cada Lugar: Opiniones Propias y de Otros Usuarios</h2>
@@ -55,18 +54,20 @@
         <h3 class="text-xl font-semibold text-yellow-400">Lugar: <%= lugar.nombre %></h3> <!-- Muestra el nombre del lugar -->
         <h3 class="text-xl font-semibold text-yellow-400">Dirección: <%= lugar.direccion %></h3> <!-- Muestra la dirección del lugar -->
 
-
         <!-- Mostrar el nombre del usuario que agregó el lugar -->
         <p class="text-sm text-gray-500">Propietario: <%= lugar.user.email %></p> <!-- Asegúrate de que 'usuario' sea la relación correcta -->
 
-        <% if lugar.comidas.any? %>
-          <% lugar.comidas.each do |comida| %>
+        <% # Filtrar comidas que tienen opiniones %>
+        <% comidas_con_opiniones = lugar.comidas.select { |comida| comida.opinions.any? } %>
+
+        <% if comidas_con_opiniones.any? %>
+          <% comidas_con_opiniones.each do |comida| %>
             <div class="my-3 p-3 border border-green-300 rounded-lg">
               <%= link_to "Ver Opiniones de la comida: #{comida.nombre}", lugare_comida_opinions_path(lugare_id: lugar.id, comida_id: comida.id), class: 'block px-4 py-2 text-green-600 hover:bg-green-100 transition' %>
             </div>
           <% end %>
         <% else %>
-          <span class="text-gray-500">No hay comidas disponibles</span>
+          <span class="text-gray-500">No hay comidas con opiniones disponibles</span>
         <% end %>
       </div>
     <% end %>

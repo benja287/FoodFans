@@ -15,7 +15,25 @@
   <% end %>
 </div>
 
-<div class="flex justify-center gap-4">
+<div class="mt-6">
+  <h2 class="text-2xl font-bold text-green-600 mb-4">Opiniones para esta comida</h2>
+
+  <% if @comida.opinions.any? %>
+    <ul class="bg-white border border-gray-200 rounded-lg shadow-md p-4">
+      <% @comida.opinions.each do |opinion| %>
+        <li class="border-b last:border-0 py-4">
+          <p><strong><%= opinion.user.email %></strong> - <%= opinion.fecha %></p>
+          <p class="text-yellow-500"><%= "⭐" * opinion.puntaje %></p>
+          <p class="text-gray-800"><%= opinion.comentario %></p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-gray-700">No hay opiniones para esta comida todavía.</p>
+  <% end %>
+</div>
+
+<div class="flex justify-center gap-4 mt-6">
   <%= link_to 'Editar', edit_lugare_comida_path(@lugar, @comida), class: 'bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500 transition duration-300' %>
   <%= link_to 'Volver', lugare_path(@lugar), class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
   <%= link_to 'Agregar Opinión', new_lugare_comida_opinion_path(@lugar, @comida), class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>

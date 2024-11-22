@@ -19,8 +19,16 @@ class LugaresController < ApplicationController
   def index
     @lugares = Lugar.all
 
-    if params[:search].present?
+    # Filtrar los lugares por nombre y/o dirección
+    if params[:search].present? && params[:direccion].present?
+      # Si ambos parámetros están presentes, buscar por ambos
+      @lugares = @lugares.where("nombre LIKE ? AND direccion LIKE ?", "%#{params[:search]}%", "%#{params[:direccion]}%")
+    elsif params[:search].present?
+      # Si solo hay un término de búsqueda por nombre
       @lugares = @lugares.where("nombre LIKE ?", "%#{params[:search]}%")
+    elsif params[:direccion].present?
+      # Si solo hay un término de búsqueda por dirección
+      @lugares = @lugares.where("direccion LIKE ?", "%#{params[:direccion]}%")
     end
   end
   def show
