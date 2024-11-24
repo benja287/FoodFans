@@ -17,10 +17,10 @@ class User < ApplicationRecord
   has_many :lugares
 
   # Validaciones manuales
-validates :email, presence: true, uniqueness: true, format: {
-  with: URI::MailTo::EMAIL_REGEXP,
-  message: "Debe ser un correo electrónico válido."
-  }
+  validates :email, presence: true, uniqueness: { message: "El correo electrónico ya está registrado." }, format: {
+     with: URI::MailTo::EMAIL_REGEXP,
+     message: "Debe ser un correo electrónico válido."
+   }
  validates :password, presence: true, length: {
    minimum: 8,
    message: "La contraseña debe contener al menos 8 caracteres."
@@ -43,14 +43,20 @@ validate :authenticate_user, on: :login # Agregamos 'on: :login' aquí
   end
   end
   # Método para validar email existente y contraseña correcta
-  def authenticate_user
-    return unless validation_context == :login # Solo ejecutar en contexto de login
+ def authenticate_user
+   return unless validation_context == :login # Solo ejecutar en contexto de login
 
-    existing_user = User.find_by(email: email)
-    if existing_user.nil?
-      errors.add(:email, "El email ingresado no se encuentra registrado")
-    elsif existing_user.present? && !existing_user.valid_password?(password)
-      errors.add(:password, "La contraseña no es válida. Intente nuevamente")
-    end
-  end
+   # Buscar al usuario por correo electrónico
+   existing_user = User.find_by(email: email)
+
+   # Validar si el correo no está registrado
+   if existing_user.nil?
+     errors.add(:email, "El email ingresado no se encuentra registrado")
+   else
+     # Validar la contraseña solo si el correo existe
+     unless existing_user.valid_password?(password)
+       errors.add(:password, "La contraseña no es válida. Intente nuevamente")
+     end
+   end
+ end
 end
