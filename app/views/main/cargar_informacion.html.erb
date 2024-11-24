@@ -12,8 +12,8 @@
         <p class="text-sm">Usuario actual: <%= current_user.email %> - Rol: <%= current_user.admin? ? "Administrador" : "Usuario" %></p>
       <% end %>
     </div>
-
-
+    <%= render 'modules/desplegable' %>
+    <%= yield %>
 </header>
 
 <!-- Contenido específico de la vista Cargar Información -->

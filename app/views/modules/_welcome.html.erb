@@ -1,0 +1,14 @@
+
+<div class="info">
+<h1 class="text-3xl font-extrabold text-yellow-400">Food Fans</h1>
+<p class="text-green-200">¡Listos para tu reseña!</p>
+</div>
+
+<div class="auth-links text-green-200">
+<% if user_signed_in? %>
+  <p class="text-sm">Usuario actual: <%= current_user.email %> - Rol: <%= current_user.admin? ? "Administrador" : "Usuario" %></p>
+<% end %>
+</div>
+
+
+<!-- MODULO DE CODIGO QUE SE REPITE DONDE SE MUESTRA LA PARTE DE LA CABECERA -->
