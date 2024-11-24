@@ -32,8 +32,26 @@ class LugaresController < ApplicationController
     end
   end
   def show
-    @lugar = Lugar.find(params[:id])
-  end
+      @lugar = Lugar.find_by(id: params[:id])
+
+      if @lugar.nil?
+        flash[:alert] = "El lugar no existe o fue eliminado."
+        redirect_to lugares_path # O cualquier otra ruta adecuada
+        return
+      end
+
+      @comidas = @lugar.comidas
+
+      # Filtrar por nombre de comida
+      if params[:search].present?
+        @comidas = @comidas.where("LOWER(nombre) LIKE ?", "%#{params[:search].downcase}%")
+      end
+
+      # Filtrar por tipo de comida
+      if params[:tipo_comida].present?
+        @comidas = @comidas.where(tipo_comida: params[:tipo_comida])
+      end
+    end
 
   private
 
