@@ -3,7 +3,7 @@ class Comida < ApplicationRecord
   has_one_attached :photo
   has_many :opinions, dependent: :destroy
   validates :nombre, :precio, :sabor, presence: true
-  validates :precio, numericality: { greater_than: 0, message: "debe ser un número positivo" }
+  validates :precio, numericality: { greater_than: 0, message: "debe ser un número positivo mayor a 0" }
   validate :validate_unique_food_name
   validate :validate_tipo_comida
 
