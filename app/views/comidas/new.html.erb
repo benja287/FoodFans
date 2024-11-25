@@ -29,11 +29,15 @@
             <%= link_to 'Ver Lugares Registrados', lugares_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
           <li>
-            <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+            <%= link_to 'Ver todas las opiniones', root_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+          </li>
+          <li>
+            <%= button_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
         <% else %>
           <li>
             <%= link_to 'Iniciar Sesión', new_user_session_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+            <%= link_to 'Crear cuenta nueva', new_user_registration_path,class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
         <% end %>
       </ul>
