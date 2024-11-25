@@ -1,3 +1,19 @@
+
+<header class="bg-green-700 text-white py-6 shadow-md w-full">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
+          
+  
+          <!-- Información de bienvenida -->
+          <%= render 'modules/welcome' %>          
+          <%= yield %>
+          <!-- Menú desplegable -->
+          <%= render 'modules/desplegable' %>
+          <%= yield %>
+  
+  
+  </div>
+</header>
+
 <div class="container mt-4">
   <h1>Nueva Opinión</h1>
 
@@ -37,3 +53,6 @@
 
   <%= link_to 'Volver', :back, class: 'btn btn-secondary mt-3' %>
 </div>
+
+<h1>NAME CONTROLLER: <%= controller_name %></h1> <!-- Nombre del controlador actual -->
+<h2>ACTION NAME: <%= action_name %></h2>     <!-- Nombre de la acción actual -->

@@ -1,5 +1,22 @@
 
 
+<header class="bg-green-700 text-white py-6 shadow-md w-full">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
+          
+  
+          <!-- Información de bienvenida -->
+          <%= render 'modules/welcome' %>          
+          <%= yield %>
+          <!-- Menú desplegable -->
+          <%= render 'modules/desplegable' %>
+          <%= yield %>
+  
+  
+  </div>
+</header>
+
+
+
 
 <h1 class="text-3xl font-extrabold text-yellow-400 mb-4"><%= @comida.nombre %></h1>
 
@@ -23,3 +40,7 @@
   <%= link_to 'Volver', lugare_path(@lugar), class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
   <%= link_to 'Agregar Opinión', new_lugare_comida_opinion_path(@lugar, @comida), class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300' %>
 </div>
+
+
+<h1>NAME CONTROLLER: <%= controller_name %></h1> <!-- Nombre del controlador actual -->
+<h2>ACTION NAME: <%= action_name %></h2>     <!-- Nombre de la acción actual -->
