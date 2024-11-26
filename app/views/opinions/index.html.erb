@@ -46,10 +46,10 @@
 </header>
 
 <div class="container mt-8 px-4">
-  <h1 class="text-3xl font-bold text-green-700 mb-4">Opiniones</h1>
+
 
   <% if @lugar.present? && @comida.present? %>
-    <h2 class="text-2xl font-semibold text-green-600 mb-4">Opiniones para la comida <%= @comida.nombre %> en <%= @lugar.nombre %></h2>
+    <h2 class="text-2xl font-semibold text-green-600 mb-4">Reseñas para la comida <%= @comida.nombre %> en <%= @lugar.nombre %></h2>
 
     <%# Mostrar la foto de la comida si está disponible %>
     <% if @comida.photo.attached? %>
@@ -61,9 +61,9 @@
     <% end %>
 
   <% elsif @lugar.present? %>
-    <h2 class="text-2xl font-semibold text-green-600 mb-4">Opiniones para <%= @lugar.nombre %></h2>
+    <h2 class="text-2xl font-semibold text-green-600 mb-4">Reseñas para <%= @lugar.nombre %></h2>
   <% else %>
-    <h2 class="text-2xl font-semibold text-green-600 mb-4">Opiniones generales</h2>
+    <h2 class="text-2xl font-semibold text-green-600 mb-4">Reseñas generales</h2>
   <% end %>
 
   <% if @opinions.any? %>
@@ -84,12 +84,11 @@
       <% end %>
     </ul>
   <% else %>
-    <p class="text-gray-500 mt-4">No hay opiniones aún.</p>
+    <p class="text-gray-500 mt-4">No hay reseñas aún.</p>
   <% end %>
-  
+
 </div>
 
 <div class="text-center mt-8">
   <%= link_to 'Volver a Inicio', root_path, class: 'inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300' %>
 </div>
-

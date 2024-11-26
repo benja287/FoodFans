@@ -17,14 +17,28 @@ class User < ApplicationRecord
   has_many :lugares
 
   # Validaciones manuales
-  validates :email, presence: true, uniqueness: { message: "El correo electrónico ya está registrado." }, format: {
-     with: URI::MailTo::EMAIL_REGEXP,
-     message: "Debe ser un correo electrónico válido."
-   }
- validates :password, presence: true, length: {
-   minimum: 8,
-   message: "La contraseña debe contener al menos 8 caracteres."
-  }
+  validate :email_validations
+
+def email_validations
+  if email.blank?
+    errors.add(:email, "El correo electrónico no puede estar en blanco.")
+  elsif User.exists?(email: email)
+    errors.add(:base, "El correo electrónico ya está registrado.")
+  elsif !email.match?(URI::MailTo::EMAIL_REGEXP)
+    errors.add(:email, "Debe ser un correo electrónico válido.")
+  end
+end
+
+validate :password_validations
+
+def password_validations
+  if password.blank?
+    errors.add(:password, "La contraseña no puede estar en blanco.")
+  elsif password.length < 8
+    errors.add(:base, "La contraseña debe contener al menos 8 caracteres.")
+  end
+end
+
  validate :password_confirmation_matches
 validate :authenticate_user, on: :login # Agregamos 'on: :login' aquí
   private
@@ -38,7 +52,7 @@ validate :authenticate_user, on: :login # Agregamos 'on: :login' aquí
     #Solo validar si las contraseñas están presentes
   if password.present? && password_confirmation.present?
    unless password == password_confirmation
-       errors.add(:password_confirmation, "La confirmación de contraseña no coincide con la contraseña.")
+       errors.add(:base, "La clave no coincide.")
     end
   end
   end

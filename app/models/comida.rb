@@ -3,7 +3,17 @@ class Comida < ApplicationRecord
   has_one_attached :photo
   has_many :opinions, dependent: :destroy
   validates :nombre, :precio, :sabor, presence: true
-  validates :precio, numericality: { greater_than: 0, message: "debe ser un número positivo mayor a 0" }
+  validate :precio_validations
+
+def precio_validations
+  if precio.nil?
+    errors.add(:precio, "no puede estar en blanco.")
+  elsif !precio.is_a?(Numeric)
+    errors.add(:precio, "debe ser un número.")
+  elsif precio <= 0
+    errors.add(:base, "El precio debe ser un valor numérico positivo mayor a cero")
+  end
+end
   validate :validate_unique_food_name
   validate :validate_tipo_comida
 
@@ -14,7 +24,7 @@ class Comida < ApplicationRecord
     existing_comida = lugar.comidas.find_by(nombre: nombre)
 
     if existing_comida.present? && (new_record? || existing_comida.id != id)
-      errors.add(:nombre, "Ya existe una comida registrada con este nombre en este lugar")
+      errors.add(:base, "Ya hiciste un registro de esta comida en este lugar")
     end
   end
 
@@ -23,7 +33,7 @@ class Comida < ApplicationRecord
   def validate_tipo_comida
     tipos = tipo_comida.to_s.split(',').map(&:strip)
     if tipos.length > 3
-      errors.add(:tipo_comida, "Solo puedes seleccionar hasta 3 tipos de comida")
+      errors.add(:base, "Solo puedes seleccionar hasta tres tipos de comida")
     elsif tipos.empty?
       errors.add(:tipo_comida, "Debes seleccionar al menos un tipo de comida")
     end

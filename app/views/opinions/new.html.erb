@@ -46,7 +46,7 @@
 </header>
 
 <div class="container mt-4 flex-col">
-  <h1 class="text-3xl font-extrabold text-yellow-400 mb-4">Nueva Opinión</h1>
+  <h1 class="text-3xl font-extrabold text-yellow-400 mb-4">Nueva Reseña</h1>
 
   <%= form_with(model: @opinion, url: @reviewable.is_a?(Lugar) ? lugare_opinions_path(@reviewable) : lugare_comida_opinions_path(@reviewable.lugar, @reviewable), local: true) do |form| %>
 
@@ -78,7 +78,7 @@
     </div>
 
     <div class="text-center mt-3">
-      <%= form.submit "Crear opinión", class: 'btn btn-success', onclick: "return confirm('¿Estás seguro de que quieres cargar la reseña?');" %>
+      <%= form.submit "Crear reseña", class: 'btn btn-success', onclick: "return confirm('¿Estás seguro de que quieres cargar la reseña?');" %>
     </div>
   <% end %>
 
@@ -86,5 +86,5 @@
       <%= link_to 'Volver', :back, class: 'btn btn-secondary mt-1' %>
     </div>
 
-  
+
 </div>

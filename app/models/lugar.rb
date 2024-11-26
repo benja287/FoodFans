@@ -22,7 +22,7 @@ class Lugar < ApplicationRecord
  def validate_unique_address
    existing_address = Lugar.find_by(direccion: direccion)
    if existing_address.present? && (new_record? || existing_address.id != id)
-     errors.add(:direccion, "Ya está registrada en otro lugar")
+     errors.add(:base, "La dirección ya está registrada en otro lugar")
    end
  end
 
