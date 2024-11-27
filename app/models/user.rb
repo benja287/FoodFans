@@ -16,6 +16,11 @@ class User < ApplicationRecord
   has_many :opinions, dependent: :destroy
   has_many :lugares
 
+
+
+
+
+
   validate :email_validations, on: [:create, :update]
 
   def email_validations
