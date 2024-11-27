@@ -35,7 +35,7 @@ end
     if tipos.length > 3
       errors.add(:base, "Solo puedes seleccionar hasta tres tipos de comida")
     elsif tipos.empty?
-      errors.add(:tipo_comida, "Debes seleccionar al menos un tipo de comida")
+      errors.add(:base, "Debes seleccionar al menos un tipo de comida")
     end
   end
 
