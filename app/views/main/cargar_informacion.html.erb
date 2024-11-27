@@ -22,15 +22,18 @@
       </button>
       <ul class="dropdown-menu absolute right-0 mt-2 w-56 bg-white border border-green-200 rounded-lg shadow-lg hidden z-20">
         <% if user_signed_in? %>
-          <li>
-            <%= link_to 'Cargar Información', cargar_informacion_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
-          </li>
-          <li>
-            <%= link_to 'Ver Lugares Registrados', lugares_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
-          </li>
-          <li>
-            <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
-          </li>
+        <li>
+          <%= link_to 'Cargar Información', cargar_informacion_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+        </li>
+        <li>
+          <%= link_to 'Menu principal de lugares', lugares_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+        </li>
+        <li>
+          <%= link_to 'Ver todas las reseñas', root_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+        </li>
+        <li>
+          <%= button_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+        </li>
         <% else %>
           <li>
             <%= link_to 'Iniciar Sesión', new_user_session_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
