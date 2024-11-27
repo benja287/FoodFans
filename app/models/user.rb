@@ -16,18 +16,17 @@ class User < ApplicationRecord
   has_many :opinions, dependent: :destroy
   has_many :lugares
 
-  # Validaciones manuales
-  validate :email_validations
+  validate :email_validations, on: [:create, :update]
 
-def email_validations
-  if email.blank?
-    errors.add(:email, "El correo electrónico no puede estar en blanco.")
-  elsif User.exists?(email: email)
-    errors.add(:base, "El correo electrónico ya está registrado.")
-  elsif !email.match?(URI::MailTo::EMAIL_REGEXP)
-    errors.add(:email, "Debe ser un correo electrónico válido.")
+  def email_validations
+    if email.blank?
+      errors.add(:email, "El correo electrónico no puede estar en blanco.")
+    elsif User.where(email: email).where.not(id: id).exists?
+      errors.add(:base, "El correo electrónico ya está registrado .")
+    elsif !email.match?(URI::MailTo::EMAIL_REGEXP)
+      errors.add(:email, "Debe ser un correo electrónico válido.")
+    end
   end
-end
 
 validate :password_validations
 

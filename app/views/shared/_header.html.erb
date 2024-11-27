@@ -1,6 +1,5 @@
 
-<header class="bg-green-700 text-white py-6 shadow-md w-full">
-  <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
+  
     <!-- Información de bienvenida -->
     <div class="info">
       <h1 class="text-3xl font-extrabold text-yellow-400">Food Fans</h1>
@@ -27,10 +26,10 @@
             <%= link_to 'Cargar Información', cargar_informacion_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
           <li>
-            <%= link_to 'Ver Lugares Registrados', lugares_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+            <%= link_to 'Menu principal de lugares', lugares_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
           <li>
-            <%= link_to 'Ver todas las opiniones', root_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
+            <%= link_to 'Ver todas las reseñas', root_path, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
           </li>
           <li>
             <%= button_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class: 'block px-4 py-3 text-gray-700 hover:bg-green-100 transition' %>
@@ -43,31 +42,4 @@
         <% end %>
       </ul>
     </div>
-  </div>
-</header>
-<% if resource.errors.any? %>
-  <div class="alert alert-danger">
-    <ul>
-      <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-<h2>¿Olvidaste Tu Contraseña?</h2>
-
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Enviar instrucciones para restablecer contraseña" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  
