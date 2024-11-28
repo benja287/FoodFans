@@ -29,8 +29,8 @@ Rails.application.routes.draw do
 
   resources :usuarios, only: [:index, :show]
 
-  devise_for :users, controllers: { sessions: 'users/sessions' }
-
+  devise_for :users, controllers: { sessions: 'users/sessions', passwords: 'users/passwords' }
+  
 
   root 'main#home'
 end

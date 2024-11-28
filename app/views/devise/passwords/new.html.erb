@@ -8,17 +8,11 @@
 
 
 
-<% if resource.errors.any? %>
+<% if flash[:alert] %>
   <div class="alert alert-danger">
-    <ul>
-      <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
+    <%= flash[:alert] %>
   </div>
 <% end %>
-
-
 
 
 
