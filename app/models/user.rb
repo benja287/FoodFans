@@ -16,13 +16,11 @@ class User < ApplicationRecord
   has_many :opinions, dependent: :destroy
   has_many :lugares
 
-
-
-
-
-
   validate :email_validations, on: [:create, :update]
 
+  
+  
+  
   def email_validations
     if email.blank?
       errors.add(:email, "El correo electrónico no puede estar en blanco.")
@@ -33,24 +31,34 @@ class User < ApplicationRecord
     end
   end
 
-validate :password_validations
+  validate :password_validations
 
-def password_validations
-  if password.blank?
-    errors.add(:password, "La contraseña no puede estar en blanco.")
-  elsif password.length < 8
-    errors.add(:base, "La contraseña debe contener al menos 8 caracteres.")
+  def password_validations
+    flash[:alert] = "Spam Comment"
+    if password.blank?
+      errors.add(:password, "La contraseña no puede estar en blanco.")
+    elsif password.length < 8
+      errors.add(:base, "La contraseña debe contener al menos 8 caracteres.")
+    end
   end
-end
 
- validate :password_confirmation_matches
-validate :authenticate_user, on: :login # Agregamos 'on: :login' aquí
-  private
+  validate :password_confirmation_matches
+  validate :authenticate_user, on: :login # Agregamos 'on: :login' aquí
+  validate :recoverable_user, on: :passwords  
+  
+
+
+
+
 
   #Método para asignar el rol predeterminado
   def set_default_role
     self.role ||= :user
   end
+  
+  
+  
+  
   #Validación personalizada para confirmar que las contraseñas coinciden
   def password_confirmation_matches
     #Solo validar si las contraseñas están presentes
@@ -60,6 +68,14 @@ validate :authenticate_user, on: :login # Agregamos 'on: :login' aquí
     end
   end
   end
+
+
+
+
+
+
+
+
   # Método para validar email existente y contraseña correcta
  def authenticate_user
    return unless validation_context == :login # Solo ejecutar en contexto de login
@@ -77,4 +93,30 @@ validate :authenticate_user, on: :login # Agregamos 'on: :login' aquí
      end
    end
  end
+
+
+
+
+
+
+
+
+
+
+
+ def recoverable_user
+  return unless validation_context == :passwords # Solo ejecutar en contexto de login
+
+  # Buscar al usuario por correo electrónico
+  existing_user = User.find_by(email: email)
+
+  # Validar si el correo no está registrado
+  if existing_user.nil?
+    errors.add(:email, "El email ingresado no se encuentra registrado")
+  end
+end
+
+
+
+
 end
