@@ -15,18 +15,10 @@ class User < ApplicationRecord
   # Relaciones
   has_many :opinions, dependent: :destroy
   has_many :lugares
-  # app/models/user.rb
-validate :email_exists_for_password_recovery, on: :recover_password
 
-def email_exists_for_password_recovery
-   return unless validation_context == :recover_password # Solo ejecutar en contexto de login
-   # Buscar al usuario por correo electrónico
-   existing_user = User.find_by(email: email)
-   # Validar si el correo no está registrado
-   if existing_user.nil?
-     errors.add(:base, "El email ingresado no se encuentra registrado")
-  end
-end
+
+
+
 
   validate :email_validations, on: [:create, :update]
 
@@ -84,4 +76,5 @@ validate :authenticate_user, on: :login # Agregamos 'on: :login' aquí
      end
    end
  end
+
 end
