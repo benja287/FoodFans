@@ -34,7 +34,6 @@ class User < ApplicationRecord
   validate :password_validations
 
   def password_validations
-    flash[:alert] = "Spam Comment"
     if password.blank?
       errors.add(:password, "La contraseña no puede estar en blanco.")
     elsif password.length < 8
